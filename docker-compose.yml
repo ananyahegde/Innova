@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  mongodb:
+    build: ./database
+    container_name: elegance_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - elegance-network
+
+  backend:
+    build: ./backend
+    container_name: elegance_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/elegence_wear
+      - PORT=3000
+    depends_on:
+      - mongodb
+    networks:
+      - elegance-network
+
+  frontend:
+    build: ./frontend
+    container_name: elegance_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - elegance-network
+
+volumes:
+  mongo-data:
+
+networks:
+  elegance-network:
+    driver: bridge

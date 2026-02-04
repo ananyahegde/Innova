@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: unique1112/innova-backend:1.0
+        ports:
+          - containerPort: 3000
+        env:
+          - name: DATABASE_URL
+            value: mongodb://mongo:27017/elegence_wear
+          - name: PORT
+            value: "3000"

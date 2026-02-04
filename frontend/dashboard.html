@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EleganceWear | Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e0;
+    transition: 0.4s;
+    border-radius: 24px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #a24cad;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(16px);
+  }
+
+  .brand-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .brand-logo .elegance { color: #a24cad; }
+  .brand-logo .wear { color: #4d1d25; }
+
+  .bg-white.shadow-md,
+  .bg-white.rounded-lg,
+  .bg-white.shadow {
+    background-color: #ffe4f0 !important; 
+  }
+
+  input[type="checkbox"] {
+    accent-color: #a24cad;
+  }
+  
+  .nav-tab {
+    text-decoration: none;
+    color: #444;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-tab:hover {
+    background-color: #ffe4f0;
+    color: #4d1d25;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(162, 76, 173, 0.1);
+  }
+
+  .setting-item:last-child {
+    border-bottom: none;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    margin-right: 0.75rem;
+    transform: scale(1.1);
+  }
+
+  .access-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .access-table th,
+  .access-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(162, 76, 173, 0.1);
+  }
+
+  .access-table th {
+    background-color: rgba(162, 76, 173, 0.1);
+    font-weight: 600;
+    color: #4d1d25;
+  }
+
+  .access-table tr:hover {
+    background-color: rgba(162, 76, 173, 0.05);
+  }
+</style>
+</head>
+
+<body class="bg-white text-gray-800">
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto p-4 text-center">
+      <div class="brand-logo">
+        <span class="elegance">Elegance</span><span class="wear">Wear</span>
+      </div>
+      <nav class="flex justify-center gap-6 mt-2 flex-wrap">
+        <a href="index.html" class="nav-tab text-gray-700 font-semibold flex items-center gap-1"><i data-feather="home"></i> Home</a>
+        <a href="products.html" class="nav-tab text-gray-700 font-semibold flex items-center gap-1"><i data-feather="shopping-bag"></i> Shop</a>
+        <a href="cart.html" class="nav-tab text-gray-700 font-semibold flex items-center gap-1"><i data-feather="shopping-cart"></i> Cart</a>
+        <a href="account.html" class="nav-tab text-gray-700 font-semibold flex items-center gap-1"><i data-feather="user"></i> Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto relative p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Data Privacy & Transparency Dashboard</h1>
+
+    <!-- Chart & Consent -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <!-- Chart -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Real-Time Data Usage (Past Year)</h2>
+          <a href="#" class="text-sm hover:underline" style="color: #4d1d25">Learn more</a>
+        </div>
+        <div class="h-64">
+          <canvas id="usageChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Access Logs -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Access Logs</h2>
+          <a href="#" class="text-sm hover:underline" style="color: #4d1d25">Learn more</a>
+        </div>
+        <div id="logs-container">
+          <div class="overflow-x-auto">
+            <table class="access-table">
+              <thead>
+                <tr>
+                  <th>Action</th>
+                  <th>Accessed By</th>
+                  <th>Date & Time</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody">
+                <!-- Logs will be populated here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4 text-center space-x-4">
+            <button id="download-json" class="text-sm hover:underline font-medium" style="color: #4d1d25">Download as JSON</button>
+            <span class="text-gray-400">|</span>
+            <button id="download-csv" class="text-sm hover:underline font-medium" style="color: #4d1d25">Download as CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Purpose & Access Logs -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <!-- Purpose -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Purpose Limitation</h2>
+          <a href="#" class="text-sm hover:underline" style="color: #4d1d25">Learn more</a>
+        </div>
+        <div class="space-y-2">
+          <div class="checkbox-item">
+            <input type="checkbox" class="PurposeToggle" data-purpose="targeted_ads" checked>
+            <span class="font-medium">Targeted Ads</span>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" class="PurposeToggle" data-purpose="product_suggestions">
+            <span class="font-medium">Product Suggestions</span>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" class="PurposeToggle" data-purpose="service_improvements">
+            <span class="font-medium">Service Improvements</span>
+          </div>
+          <div class="checkbox-item">
+            <input type="checkbox" class="PurposeToggle" data-purpose="email_updates" checked>
+            <span class="font-medium">Email Updates</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consent -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Consent Settings</h2>
+          <a href="#" class="text-sm hover:underline" style="color: #4d1d25">Learn more</a>
+        </div>
+        <div class="space-y-2">
+          <div class="setting-item">
+            <span class="font-medium">Email Tracking</span>
+            <label class="switch">
+              <input type="checkbox" class="ConsentToggle" data-purpose="email_tracking" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <span class="font-medium">Location Data</span>
+            <label class="switch">
+              <input type="checkbox" class="ConsentToggle" data-purpose="location_data">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <span class="font-medium">Device Info</span>
+            <label class="switch">
+              <input type="checkbox" class="ConsentToggle" data-purpose="device_info" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="text-center mt-6">
+      <button id="save-btn" type="button" class="text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg" style="background-color:#4d1d25;">
+        Save Preferences
+      </button>
+    </div>
+  </div>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>

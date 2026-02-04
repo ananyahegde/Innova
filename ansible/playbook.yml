@@ -1,0 +1,49 @@
+- name: Setup EleganceWear using Docker + Kubernetes
+  hosts: local
+  become: yes
+
+  tasks:
+
+    - name: Check if Docker is installed
+      command: docker --version
+      register: docker_check
+      ignore_errors: yes
+
+    - name: Install Docker only if not present
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+      when: docker_check.failed
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install kubectl
+      snap:
+        name: kubectl
+        classic: yes
+
+    - name: Check if minikube exists
+      command: minikube version
+      register: minikube_check
+      ignore_errors: yes
+
+    - name: Install minikube
+      get_url:
+        url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        dest: /usr/local/bin/minikube
+        mode: '0755'
+      when: minikube_check.failed
+
+    # �� IMPORTANT FIX HERE
+    - name: Start Minikube (non-root)
+      command: minikube start --driver=docker
+      become: false
+
+    - name: Apply Kubernetes manifests
+      command: kubectl apply -f ../k8s/
+      become: false
