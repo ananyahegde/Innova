@@ -98,7 +98,7 @@ kubectl get services
 ```
 
 ## 📄 License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
 ## 🤝 Contributions
 PRs and suggestions are welcome.
