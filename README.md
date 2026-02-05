@@ -14,10 +14,10 @@ Check out our website here: [visit website](https://elegancewear.onrender.com/) 
   - Real-time Data Usage chart (data events tracked)
 - Responsive frontend built using Tailwind CSS
 - REST API with Express.js and MongoDB
-- **Containerized deployment with Docker and Docker Compose**
-- **Kubernetes orchestration with automated scaling and load balancing**
-- **Infrastructure automation using Ansible**
-- **CI/CD pipeline with GitHub Actions for automated builds**
+- Containerized deployment with Docker and Docker Compose
+- Kubernetes orchestration with automated scaling and load balancing
+- Infrastructure automation using Ansible
+- CI/CD pipeline with GitHub Actions for automated builds
 - Deployed using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for the database and [Render](https://render.com/) for hosting both the frontend and backend.
 
 ## 🚀 Setup Instructions
@@ -98,7 +98,7 @@ kubectl get services
 ```
 
 ## 📄 License
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
 ## 🤝 Contributions
 PRs and suggestions are welcome.
