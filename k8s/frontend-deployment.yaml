@@ -15,5 +15,6 @@ spec:
       containers:
       - name: frontend
         image: unique1112/innova-frontend:1.0
+        imagePullPolicy: Always
         ports:
           - containerPort: 80
